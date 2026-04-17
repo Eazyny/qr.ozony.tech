@@ -74,11 +74,22 @@ export default function QrScene({ payload }) {
     controls.autoRotateSpeed = 1.0;
     controls.enablePan = false;
 
-    // Manual camera presets by breakpoint
     const CAMERA_PRESETS = {
-      desktop: { fov: 18, position: [200, -50, 200] },
-      tablet: { fov: 22, position: [230, -36, 230] },
-      mobile: { fov: 28, position: [270, -20, 270] },
+      desktop: {
+        fov: 18,
+        position: [165, 6, 165],
+        target: [0, -5, 0],
+      },
+      tablet: {
+        fov: 22,
+        position: [185, 18, 185],
+        target: [0, -5, 0],
+      },
+      mobile: {
+        fov: 28,
+        position: [215, 34, 215],
+        target: [0, -30, 0],
+      },
     };
 
     function getCameraPreset() {
@@ -92,13 +103,14 @@ export default function QrScene({ payload }) {
     function setResponsiveCamera() {
       const preset = getCameraPreset();
       const [x, y, z] = preset.position;
+      const [tx, ty, tz] = preset.target;
 
       camera.fov = preset.fov;
       camera.position.set(x, y, z);
       camera.aspect = mount.clientWidth / mount.clientHeight;
       camera.updateProjectionMatrix();
 
-      controls.target.set(0, 0, 0);
+      controls.target.set(tx, ty, tz);
       controls.update();
     }
 
