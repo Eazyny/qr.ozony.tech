@@ -2,7 +2,6 @@ import QrScene from './components/QrScene';
 import { qrPayload } from './lib/qrPayload';
 
 const card = {
-  brand: 'Ozony Tech',
   title: 'IT & Network Solutions',
   description:
     'Small-business networking, Wi-Fi, firewall, and support designed to look clean, work reliably, and scale with you.',
@@ -21,8 +20,8 @@ function downloadVCard() {
   const lines = [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `FN:${card.brand}`,
-    `ORG:${card.brand}`,
+    'FN:Ozony Tech',
+    'ORG:Ozony Tech',
     `TITLE:${card.title}`,
     `EMAIL;TYPE=INTERNET:${card.email}`,
     `URL:${card.website}`,
@@ -63,8 +62,6 @@ function App() {
       <main className="card-stage">
         <section className="identity-card">
           <div className="identity-card__shine" />
-
-          <p className="identity-card__eyebrow">{card.brand}</p>
 
           <h1 className="identity-card__title">{card.title}</h1>
 

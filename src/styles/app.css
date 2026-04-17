@@ -122,11 +122,12 @@ a {
 
 .identity-card {
   position: relative;
-  width: min(1100px, 92vw);
+  width: min(760px, 92vw);
+  max-width: 760px;
   pointer-events: auto;
   overflow: hidden;
   border-radius: 28px;
-  padding: 22px 24px;
+  padding: 22px 26px;
   background:
     linear-gradient(180deg, rgba(13, 18, 24, 0.72), rgba(7, 10, 14, 0.58)),
     rgba(0, 0, 0, 0.42);
@@ -147,7 +148,6 @@ a {
     radial-gradient(circle at bottom right, rgba(83, 155, 255, 0.08), transparent 25%);
 }
 
-.identity-card__eyebrow,
 .identity-card__title,
 .identity-card__description,
 .identity-card__meta,
@@ -155,15 +155,6 @@ a {
 .identity-card__chips {
   position: relative;
   z-index: 1;
-}
-
-.identity-card__eyebrow {
-  margin: 0 0 8px;
-  color: #87bfff;
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
 }
 
 .identity-card__title {
@@ -176,7 +167,7 @@ a {
 
 .identity-card__description {
   margin: 12px auto 0;
-  max-width: 58ch;
+  max-width: 34ch;
   color: rgba(255, 255, 255, 0.72);
   font-size: 1rem;
   line-height: 1.6;
@@ -252,11 +243,12 @@ a {
 }
 
 .identity-card__chips {
-  margin-top: 18px;
+  margin: 18px auto 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  max-width: 620px;
 }
 
 .service-chip {
@@ -286,7 +278,8 @@ a {
   }
 
   .identity-card {
-    width: min(94vw, 900px);
+    width: min(680px, 94vw);
+    max-width: 680px;
   }
 
   .identity-card__title {
