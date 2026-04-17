@@ -52,17 +52,12 @@ function App() {
       <div className="scene-vignette" />
       <div className="scene-grid" />
 
-      <header className="floating-header">
-        <div className="floating-header__pill">Digital Business Card</div>
-
-        <a
-          className="floating-header__link"
-          href={card.website}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Main Site
-        </a>
+      <header className="qr-header">
+        <img
+          src="/ozonytechheader.png"
+          alt="Ozony Tech"
+          className="qr-header__logo"
+        />
       </header>
 
       <main className="card-stage">
