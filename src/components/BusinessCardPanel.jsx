@@ -1,7 +1,5 @@
 const card = {
-  title: 'IT & Network Solutions',
-  description:
-    'Small-business networking, Wi-Fi, firewall, and support designed to look clean, work reliably, and scale with you.',
+  title: 'Managed IT Services & Network Solutions',
   email: 'contact@ozony.tech',
   website: 'https://ozony.tech',
   location: 'NYC · NJ · Remote-ready',

@@ -92,20 +92,21 @@ button {
 /* header */
 .qr-header {
   position: absolute;
-  top: 14px;
+  top: 12px;
   left: 50%;
   z-index: 4;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(92vw, 1240px);
+  width: 100%;
   pointer-events: none;
 }
 
 .qr-header__logo {
   display: block;
-  width: min(220px, 30vw);
+  width: min(360px, 72vw);
+  max-width: none;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.35));
@@ -113,7 +114,7 @@ button {
   -webkit-user-drag: none;
 }
 
-/* overall layout */
+/* layout */
 .layout-shell {
   position: absolute;
   inset: 0;
@@ -282,8 +283,12 @@ button {
 
 /* tablet */
 @media (max-width: 1024px) {
+  .qr-header {
+    top: 10px;
+  }
+
   .qr-header__logo {
-    width: min(190px, 32vw);
+    width: min(320px, 64vw);
   }
 
   .identity-card {
@@ -296,14 +301,14 @@ button {
   }
 }
 
-/* mobile portrait + general mobile */
+/* mobile */
 @media (max-width: 768px) {
   .qr-header {
-    top: 10px;
+    top: 8px;
   }
 
   .qr-header__logo {
-    width: min(160px, 42vw);
+    width: min(260px, 68vw);
   }
 
   .layout-shell__card-wrap {
@@ -357,11 +362,11 @@ button {
 /* mobile landscape */
 @media (max-width: 932px) and (orientation: landscape) {
   .qr-header {
-    top: 8px;
+    top: 6px;
   }
 
   .qr-header__logo {
-    width: min(120px, 16vw);
+    width: min(160px, 26vw);
   }
 
   .layout-shell {
@@ -426,6 +431,6 @@ button {
 
 @media (max-width: 480px) {
   .qr-header__logo {
-    width: min(150px, 46vw);
+    width: min(220px, 72vw);
   }
 }
