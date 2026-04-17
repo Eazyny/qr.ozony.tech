@@ -3,8 +3,6 @@ import { qrPayload } from './lib/qrPayload';
 
 const card = {
   title: 'IT & Network Solutions',
-  description:
-    'Small-business networking, Wi-Fi, firewall, and support designed to look clean, work reliably, and scale with you.',
   email: 'contact@ozony.tech',
   website: 'https://ozony.tech',
   location: 'NYC · NJ · Remote-ready',
