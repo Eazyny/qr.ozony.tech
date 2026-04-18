@@ -1,0 +1,77 @@
+.starry-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #080b14 0%, #12182c 46%, #1f1731 100%);
+}
+
+.starry-sky__layer,
+.starry-sky__extras {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.starry-sky__layer {
+  animation: starry-twinkle 4s ease-in-out infinite;
+}
+
+.starry-sky__layer:nth-of-type(2) {
+  animation-delay: -1.33s;
+}
+
+.starry-sky__layer:nth-of-type(3) {
+  animation-delay: -2.66s;
+}
+
+.starry-sky__star {
+  fill: #ffffff;
+}
+
+.starry-sky__comet {
+  transform-origin: center center;
+  animation: starry-comet 10s linear infinite;
+}
+
+.starry-sky__comet--b {
+  animation-delay: -3.3s;
+}
+
+.starry-sky__comet--c {
+  animation-delay: -5s;
+}
+
+@keyframes starry-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes starry-comet {
+  0%,
+  40% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  60%,
+  100% {
+    transform: translateX(-100vmax);
+    opacity: 0;
+  }
+}

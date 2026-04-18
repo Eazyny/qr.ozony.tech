@@ -142,7 +142,7 @@ export default function QrScene({ payload }) {
       fineDensity: 0.5,
       cutScale: USER_DEFAULTS.cutScale,
       cutThreshold: 0.5,
-      metalness: 0.6,
+      metalness: 0.5,
       roughness: 0.05,
       rotate: true,
       border: USER_DEFAULTS.border,
@@ -316,24 +316,24 @@ export default function QrScene({ payload }) {
     const materialMetal = trackMaterial(
       new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        metalness: 1.0,
-        roughness: 0.05,
+        metalness: .5,
+        roughness: 0.1,
       })
     );
 
     const materialSide = trackMaterial(
       new THREE.MeshStandardMaterial({
         color: 0x050505,
-        metalness: 0.3,
-        roughness: 0.8,
+        metalness: 0.5,
+        roughness: 0.1,
       })
     );
 
     const materialBase = trackMaterial(
       new THREE.MeshStandardMaterial({
         color: 0x050505,
-        metalness: 0.1,
-        roughness: 0.8,
+        metalness: 0.5,
+        roughness: 0.1,
       })
     );
 
