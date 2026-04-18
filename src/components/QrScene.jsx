@@ -103,8 +103,8 @@ export default function QrScene({ payload }) {
         fov: 20,
         position: [138, 8, 138],
         target: [0, -8, 0],
-        groupPosition: [-120, -24, 0],
-        groupScale: 1.82,
+        groupPosition: [-100, -24, 0],
+        groupScale: 1.85,
       },
     };
 
