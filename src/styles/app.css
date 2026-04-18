@@ -1,11 +1,14 @@
+@font-face {
+  font-family: 'Oxanium';
+  src: url('../assets/fonts/Oxanium-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
+  font-family: 'Oxanium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
   background: #000;
   color: #fff;
@@ -21,11 +24,14 @@ body,
   margin: 0;
   width: 100%;
   min-height: 100%;
+  font-family: 'Oxanium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
 }
 
 body {
   background: #000;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 canvas {
@@ -42,16 +48,34 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-button {
+button,
+input,
+textarea,
+select {
   font: inherit;
 }
 
 .app-shell {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100svh;
+  height: 100svh;
   overflow: hidden;
   background: #000;
+  isolation: isolate;
+}
+
+.app-shell__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-shell__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .qr-scene {
@@ -63,7 +87,7 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.03),
@@ -75,7 +99,7 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
   opacity: 0.06;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -89,7 +113,13 @@ button {
   );
 }
 
-/* header */
+.app-shell__ui {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
 .qr-header {
   position: absolute;
   top: 12px;
@@ -114,7 +144,6 @@ button {
   -webkit-user-drag: none;
 }
 
-/* layout */
 .layout-shell {
   position: absolute;
   inset: 0;
@@ -136,7 +165,6 @@ button {
   pointer-events: none;
 }
 
-/* card */
 .identity-card {
   position: relative;
   width: min(560px, 92vw);
@@ -281,7 +309,6 @@ button {
   letter-spacing: 0.01em;
 }
 
-/* tablet */
 @media (max-width: 1024px) {
   .qr-header {
     top: 10px;
@@ -301,18 +328,56 @@ button {
   }
 }
 
-/* mobile */
 @media (max-width: 768px) {
+  .app-shell {
+    min-height: 100svh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .app-shell__background,
+  .app-shell__scene,
+  .scene-vignette,
+  .scene-grid {
+    position: fixed;
+    inset: 0;
+  }
+
+  .app-shell__ui {
+    position: relative;
+    inset: auto;
+    min-height: 100svh;
+  }
+
   .qr-header {
-    top: 8px;
+    top: 10px;
+    position: fixed;
   }
 
   .qr-header__logo {
-    width: min(260px, 68vw);
+    width: min(250px, 64vw);
+  }
+
+  .layout-shell {
+    position: relative;
+    inset: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 56svh;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 4;
+  }
+
+  .layout-shell__spacer {
+    display: none;
   }
 
   .layout-shell__card-wrap {
-    padding: 10px;
+    padding: 10px 10px 16px;
+    align-items: stretch;
+    justify-content: center;
   }
 
   .identity-card {
@@ -324,7 +389,8 @@ button {
 
   .identity-card__title {
     max-width: 9ch;
-    font-size: clamp(1.45rem, 8vw, 2.1rem);
+    font-size: clamp(1.45rem, 8vw, 2.05rem);
+    line-height: 0.94;
   }
 
   .identity-card__description {
@@ -359,37 +425,71 @@ button {
   }
 }
 
-/* mobile landscape */
 @media (max-width: 932px) and (orientation: landscape) {
+  .app-shell {
+    height: 100svh;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+
+  .app-shell__background,
+  .app-shell__scene,
+  .scene-vignette,
+  .scene-grid {
+    position: absolute;
+    inset: 0;
+  }
+
+  .app-shell__ui {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+  }
+
   .qr-header {
     top: 6px;
+    position: absolute;
   }
 
   .qr-header__logo {
-    width: min(160px, 26vw);
+    width: min(170px, 24vw);
   }
 
   .layout-shell {
-    grid-template-rows: 1fr;
-    align-items: end;
-  }
-
-  .layout-shell__card-wrap {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     padding: 10px;
+    z-index: 4;
+  }
+
+  .layout-shell__spacer {
+    display: none;
+  }
+
+  .layout-shell__card-wrap {
+    width: 39vw;
+    min-width: 320px;
+    max-width: 390px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 0;
   }
 
   .identity-card {
-    width: min(360px, 34vw);
-    max-width: 360px;
+    width: 100%;
+    max-width: 100%;
     border-radius: 18px;
     padding: 12px;
   }
 
   .identity-card__title {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     max-width: 9ch;
+    line-height: 0.95;
   }
 
   .identity-card__description {

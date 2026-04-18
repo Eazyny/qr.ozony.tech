@@ -74,59 +74,63 @@ export default function QrScene({ payload }) {
     controls.autoRotateSpeed = 1.0;
     controls.enablePan = false;
 
+    const qrGroup = new THREE.Group();
+    scene.add(qrGroup);
+
     const CAMERA_PRESETS = {
       desktop: {
         fov: 18,
         position: [165, 6, 165],
         target: [0, -5, 0],
+        groupPosition: [0, 0, 0],
+        groupScale: 1,
       },
       tablet: {
         fov: 22,
         position: [185, 18, 185],
         target: [0, -5, 0],
+        groupPosition: [0, 0, 0],
+        groupScale: 1,
       },
-      mobile: {
-        fov: 28,
-        position: [215, 34, 215],
-        target: [0, -30, 0],
+      mobilePortrait: {
+        fov: 27,
+        position: [198, 24, 198],
+        target: [0, -10, 0],
+        groupPosition: [0, 8, 0],
+        groupScale: 1.08,
+      },
+      mobileLandscape: {
+        fov: 20,
+        position: [138, 8, 138],
+        target: [0, -8, 0],
+        groupPosition: [-120, -24, 0],
+        groupScale: 1.82,
       },
     };
 
+    function isMobileLandscape() {
+      return window.innerWidth <= 932 && window.innerWidth > window.innerHeight;
+    }
+
     function getCameraPreset() {
       const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isLandscape = width > height;
 
-      if (width < 768) return CAMERA_PRESETS.mobile;
-      if (width < 1024) return CAMERA_PRESETS.tablet;
+      if (width <= 932 && isLandscape) {
+        return CAMERA_PRESETS.mobileLandscape;
+      }
+
+      if (width < 768) {
+        return CAMERA_PRESETS.mobilePortrait;
+      }
+
+      if (width < 1024) {
+        return CAMERA_PRESETS.tablet;
+      }
+
       return CAMERA_PRESETS.desktop;
     }
-
-    function setResponsiveCamera() {
-      const preset = getCameraPreset();
-      const [x, y, z] = preset.position;
-      const [tx, ty, tz] = preset.target;
-
-      camera.fov = preset.fov;
-      camera.position.set(x, y, z);
-      camera.aspect = mount.clientWidth / mount.clientHeight;
-      camera.updateProjectionMatrix();
-
-      controls.target.set(tx, ty, tz);
-      controls.update();
-    }
-
-    new RGBELoader()
-      .setPath('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/')
-      .load('brown_photostudio_02_2k.hdr', (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
-        texture.generateMipmaps = false;
-        scene.environment = texture;
-        hdriTexture = texture;
-      });
-
-    const qrGroup = new THREE.Group();
-    scene.add(qrGroup);
 
     const params = {
       mode: USER_DEFAULTS.mode,
@@ -147,6 +151,36 @@ export default function QrScene({ payload }) {
       rotate: true,
       border: USER_DEFAULTS.border,
     };
+
+    function setResponsiveCamera() {
+      const preset = getCameraPreset();
+      const [x, y, z] = preset.position;
+      const [tx, ty, tz] = preset.target;
+      const [gx, gy, gz] = preset.groupPosition;
+
+      camera.fov = preset.fov;
+      camera.position.set(x, y, z);
+      camera.aspect = mount.clientWidth / mount.clientHeight;
+      camera.updateProjectionMatrix();
+
+      qrGroup.position.set(gx, gy, gz);
+      qrGroup.scale.setScalar(preset.groupScale);
+
+      controls.target.set(tx, ty, tz);
+      controls.autoRotate = isMobileLandscape() ? false : params.rotate;
+      controls.update();
+    }
+
+    new RGBELoader()
+      .setPath('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/')
+      .load('brown_photostudio_02_2k.hdr', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = false;
+        scene.environment = texture;
+        hdriTexture = texture;
+      });
 
     function trackTexture(texture) {
       disposableTextures.add(texture);
@@ -316,7 +350,7 @@ export default function QrScene({ payload }) {
     const materialMetal = trackMaterial(
       new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        metalness: .5,
+        metalness: 0.5,
         roughness: 0.1,
       })
     );
@@ -666,6 +700,10 @@ export default function QrScene({ payload }) {
       }
 
       qrGroup.add(cutsGroup);
+
+      qrGroup.rotation.set(0, Math.PI * 0.12, 0);
+
+      setResponsiveCamera();
     }
 
     const isDev = import.meta.env.DEV;
@@ -711,7 +749,7 @@ export default function QrScene({ payload }) {
         .add(params, 'rotate')
         .name('Auto Rotation')
         .onChange((value) => {
-          controls.autoRotate = value;
+          controls.autoRotate = isMobileLandscape() ? false : value;
         });
 
       const fGeo = gui.addFolder('Geometry');
@@ -778,6 +816,11 @@ export default function QrScene({ payload }) {
 
     const animate = () => {
       animationFrameId = window.requestAnimationFrame(animate);
+
+      if (isMobileLandscape()) {
+        qrGroup.rotation.y += 0.01;
+      }
+
       controls.update();
       renderer.render(scene, camera);
     };

@@ -1,13 +1,10 @@
 const card = {
-  title: 'Managed IT Services & Network Solutions',
+  title: 'Network Solutions',
   email: 'contact@ozony.tech',
   website: 'https://ozony.tech',
   location: 'NYC · NJ · Remote-ready',
   services: [
-    'Network Setup',
-    'Business Wi-Fi',
-    'Firewall & Security',
-    'IT Support',
+    
   ],
 };
 
