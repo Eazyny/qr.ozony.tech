@@ -448,11 +448,14 @@ select {
 
   .qr-header {
     top: 6px;
+    left: 16px;          /* 👈 pushes it from center to left */
+    transform: none;     /* 👈 removes center alignment */
     position: absolute;
+    justify-content: flex-start;
   }
 
   .qr-header__logo {
-    width: min(170px, 24vw);
+    width: min(150px, 22vw);
   }
 
   .layout-shell {
