@@ -818,7 +818,7 @@ export default function QrScene({ payload }) {
       animationFrameId = window.requestAnimationFrame(animate);
 
       if (isMobileLandscape()) {
-        qrGroup.rotation.y += 0.01;
+        qrGroup.rotation.y += 0.003;
       }
 
       controls.update();
